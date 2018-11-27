@@ -1,0 +1,120 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>TestDriver.sikuli</h2> <a href="TestDriver.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">from</span> sikuli <span class="kw">import</span>*
+<span class="kw">import</span> HTMLTestRunner
+reload(HTMLTestRunner)
+<span class="kw">import</span> unittest
+<span class="kw">import</span> os,sys
+<span class="kw">import</span> xlrd
+<span class="kw">import</span> datetime
+
+now = datetime.datetime.now()
+userdir = os.path.expanduser(<span class="str">'~'</span>)
+userdir.replace(<span class="str">"//"</span>, <span class="str">"////"</span>)
+RootFolder = userdir + <span class="str">"/Desktop/PRE_Sikuli_Automation"</span>
+
+<span class="kw">if</span> <span class="kw">not</span> RootFolder <span class="kw">in</span> sys.path:
+    sys.path.append(RootFolder)
+
+<span class="kw">print</span> sys.path
+
+<span class="kw">from</span> Effects <span class="kw">import</span> *
+<span class="kw">from</span> Transitions <span class="kw">import</span> *
+<span class="kw">from</span> GlassPane_GE <span class="kw">import</span> *
+
+workbook = xlrd.open_workbook(RootFolder+<span class="str">"//TestData//"</span> + <span class="str">"PRE_Test_Execution_Data.xls"</span>)
+worksheet = workbook.sheet_by_index(<span class="dig">0</span>)
+
+testcase_list = []
+<span class="kw">for</span> row <span class="kw">in</span> range(worksheet.nrows):
+    area_flag = worksheet.cell(row, <span class="dig">3</span>).value
+    <span class="kw">if</span> area_flag == <span class="dig">1</span>:
+        testcase_list.append(worksheet.cell(row, <span class="dig">1</span>).value)
+
+suite = unittest.TestSuite()
+
+<span class="kw">for</span> testcase <span class="kw">in</span> testcase_list:
+    <span class="kw">if</span> testcase == <span class="str">"Effects"</span>:
+        suite.addTest(TestEffects(<span class="str">"test_UI_Effects"</span>))
+    <span class="kw">elif</span> testcase == <span class="str">"Transitions"</span>:
+        suite.addTest(TestTransitions(<span class="str">"test_UI_Transitions"</span>))
+    <span class="kw">elif</span> testcase == <span class="str">"GlassPane_GE"</span>:
+        suite.addTest(TestGlassPane_GE(<span class="str">"test_UI_GlassPane_GE"</span>))
+
+outputfilename = RootFolder + <span class="str">"//Output//TestReport_"</span> + str(now.day) + str(now.month) + str(now.year) + <span class="str">"_"</span> + str(now.hour) + str(now.minute) + str(now.second) + <span class="str">".html"</span>
+outfile = file(outputfilename, <span class="str">"wb"</span>)
+runner = HTMLTestRunner.HTMLTestRunner(stream=outfile, title=<span class="str">'PRE UI Tests Execution Report'</span>, description=<span class="str">'This is test report for test execution of UI tests for Premiere Elements application.'</span> )
+runner.run(suite)
+</pre>
+</body>
+</html>

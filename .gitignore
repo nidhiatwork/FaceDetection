@@ -1,0 +1,7 @@
+.vscode/settings.json
+.pytest_cache/v/cache/nodeids
+Output/*.html
+Output/Screenshots/*.png
+Collection/*
+Stock/*
+ScreenshotSamples/*
