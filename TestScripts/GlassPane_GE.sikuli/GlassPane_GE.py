@@ -11,33 +11,40 @@ class TestGlassPane_GE(unittest.TestCase):
 
     def setUp(self):
         close_AA_PRE_And_Launch_AA_PRE()
-        print "Started..."
+
     def test_UI_GlassPane_GE(self):
         wait(1)
         os.chdir(Constants.CollectionFolder)
-        click("AddMedia.png")
         setAutoWaitTimeout(60)
-        files = list()
         i=1
-        for filename in os.listdir(Constants.CollectionFolder):
+        l = os.listdir(Constants.CollectionFolder)
+        l.sort()
+        for filename in l:
             if filename.find(".")==0:
                 continue
             now = datetime.datetime.now()
             postfix = str(now.day) + str(now.month) + str(now.year) + "_" + str(now.hour) + str(now.minute) + str(now.second)
-            newfilename = "Image#" + str(i) + "_"+ postfix + filename[filename.find("."):]
+            if Constants.Mode == "Image":
+                newfilename = "Image#" + str(i) + "_"+ postfix + filename[filename.find("."):]
+            else:
+                newfilename = "Video#" + str(i) + "_"+ postfix + filename[filename.find("."):]
+
             print "Filename changed from " + filename + " to " + newfilename
             shutil.copy(Constants.CollectionFolder+filename,Constants.CollectionFolder+newfilename)
             os.remove(Constants.CollectionFolder+filename)
-            
+            os.system("osascript -e 'tell application \"Adobe Premiere Elements\" to activate'")
             clickElement("AddMedia.png")
             clickElement("Filesandfolder.png")
-        
             clickElement("Search.png")
             type(newfilename)
             type(Key.ENTER)
             clickElement("CoIlection.png")
             wait(2)
-            doubleClickElement(Pattern("Image_Number.png").similar(0.85))
+            if Constants.Mode=="Image":
+                doubleClickElement(Pattern("Image_Number.png").similar(0.85))
+            else:
+                doubleClickElement(Pattern("Video.png").similar(0.85))
+                
             if Constants.Technology=="Mona":
                 print("Launching AA again to ensure process is running")
                 os.system("open -a Terminal") 
@@ -47,15 +54,27 @@ class TestGlassPane_GE(unittest.TestCase):
                 keyDown(Key.CMD + Key.SHIFT + Key.LEFT)
                 wait(1)
                 keyUp(Key.CMD + Key.SHIFT + Key.LEFT)
-                type(Key.ENTER)           
-            wait(3)
-            clickElement("AddMedia.png")
+                type(Key.ENTER)                 
+                wait(3)
+            os.system("osascript -e 'tell application \"Adobe Premiere Elements\" to activate'")
             clickElement("Tools.png")
-            clickElement("PanZoomTool.png")
-            wait(5)
-            findElement("Done.png")
-            os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
-            clickElement("Done.png")
+            if Constants.Mode=="Image":
+                clickElement("PanZoomTool.png")
+                wait(5)
+                findElement("Done.png")
+                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
+                clickElement("Done.png")
+            else:
+                clickElement("SmartTrim.png")
+                clickElement("ShowPresets.png")
+                clickElement("People_Preset.png")
+                wait(2)
+                setAutoWaitTimeout(900)
+                findElement(Pattern("ContinueEditing.png").similar(0.95))
+                clickElement(Pattern("ContinueEditing.png").similar(0.95))
+                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
+                setAutoWaitTimeout(60)
+
             wait(5)
             type("N", Key.CMD)
             findElement("No_button.png")
