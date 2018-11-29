@@ -70,12 +70,16 @@ class TestGlassPane_GE(unittest.TestCase):
                 clickElement("People_Preset.png")
                 wait(2)
                 setAutoWaitTimeout(900)
-                findElement(Pattern("ContinueEditing.png").similar(0.95))
-                clickElement(Pattern("ContinueEditing.png").similar(0.95))
+                findElement(Pattern("Playbar.png").similar(0.79))
                 os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
+
+                click(Pattern("CloseWindow.png").similar(0.78))
+                findElement("No_button.png")
+                clickElement("No_button.png")
+                
                 setAutoWaitTimeout(60)
 
-            wait(5)
+            wait(3)
             type("N", Key.CMD)
             findElement("No_button.png")
             clickElement("No_button.png")
