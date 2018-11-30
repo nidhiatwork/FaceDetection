@@ -44,7 +44,7 @@ class TestGlassPane_GE(unittest.TestCase):
                 doubleClickElement(Pattern("Image_Number.png").similar(0.85))
             else:
                 doubleClickElement(Pattern("Video.png").similar(0.85))
-                
+            wait(2)
             if Constants.Technology=="Mona":
                 print("Launching AA again to ensure process is running")
                 os.system("open -a Terminal") 
@@ -66,10 +66,12 @@ class TestGlassPane_GE(unittest.TestCase):
                 clickElement("Done.png")
             else:
                 clickElement("SmartTrim.png")
+                wait(1)
                 clickElement("ShowPresets.png")
+                wait(1)
                 clickElement("People_Preset.png")
                 wait(2)
-                setAutoWaitTimeout(900)
+                setAutoWaitTimeout(3600)
                 findElement(Pattern("Playbar.png").similar(0.79))
                 os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
 
