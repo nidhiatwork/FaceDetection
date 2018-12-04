@@ -15,7 +15,7 @@ if not RootFolder in sys.path:
 
 from TestScripts import Constants as Constants
 reload(Constants)
-from GlassPane_GE import *
+from PRE_FaceDetection import *
 
 suite = unittest.TestSuite()
 

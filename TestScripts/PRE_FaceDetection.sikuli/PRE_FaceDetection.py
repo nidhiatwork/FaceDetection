@@ -7,12 +7,12 @@ import unittest
 import shutil
 import datetime
 
-class TestGlassPane_GE(unittest.TestCase):
+class TestPRE_FaceDetection(unittest.TestCase):
 
     def setUp(self):
         close_AA_PRE_And_Launch_AA_PRE()
 
-    def test_UI_GlassPane_GE(self):
+    def test_UI_FaceDetection(self):
         wait(1)        
         os.chdir(Constants.CollectionFolder)
         setAutoWaitTimeout(60)
