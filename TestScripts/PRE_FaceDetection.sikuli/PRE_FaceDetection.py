@@ -40,13 +40,38 @@ class TestPRE_FaceDetection(unittest.TestCase):
             type(Key.ENTER)
             clickElement("CoIlection.png")
             wait(2)
+            setAutoWaitTimeout(15)
             if Constants.Mode=="Image":
-                doubleClickElement(Pattern("Image_Number.png").similar(0.85))
+                if exists(Pattern("Image_Number.png").similar(0.85)):
+                    doubleClickElement(Pattern("Image_Number.png").similar(0.85))
+                else:
+                    print "Test data not found in system directory. Skipping to next test data."
+                    os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
+                    type(Key.ESC)
+                    wait(1)
+                    type(Key.ESC)
+                    wait(1)
+                    i = i+1
+                    os.rename(Constants.CollectionFolder+newfilename,Constants.CollectionFolder+filename)
+                    continue
             else:
-                doubleClickElement(Pattern("Video.png").similar(0.85))
+                if exists(Pattern("Video.png").similar(0.85)):
+                    doubleClickElement(Pattern("Video.png").similar(0.85))
+                else:
+                    print "Test data not found in system directory. Skipping to next test data."
+                    os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
+                    type(Key.ESC)
+                    wait(1)
+                    type(Key.ESC)
+                    wait(1)
+                    i = i+1
+                    os.rename(Constants.CollectionFolder+newfilename,Constants.CollectionFolder+filename)
+                    continue
             wait(2)
+
             print("Launching AA again to ensure process is running")
             os.system("open -a Terminal")
+            setAutoWaitTimeout(60)
             wait(2)
             type("N", Key.CMD)
             wait(2)
@@ -95,6 +120,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
             clickElement("Cancel_button.png")
             print "Completed screenshot taking process for file: " + newfilename
             i = i+1
+            os.rename(Constants.CollectionFolder+newfilename,Constants.CollectionFolder+filename)
             if Constants.Technology=="Mona":
                 os.system("killall 'Elements Auto Creations 2019'")
                 wait(2)
