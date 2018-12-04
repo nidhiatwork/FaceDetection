@@ -13,7 +13,7 @@ class TestGlassPane_GE(unittest.TestCase):
         close_AA_PRE_And_Launch_AA_PRE()
 
     def test_UI_GlassPane_GE(self):
-        wait(1)
+        wait(1)        
         os.chdir(Constants.CollectionFolder)
         setAutoWaitTimeout(60)
         i=1
@@ -59,10 +59,17 @@ class TestGlassPane_GE(unittest.TestCase):
             clickElement("Tools.png")
             if Constants.Mode=="Image":
                 clickElement("PanZoomTool.png")
-                setAutoWaitTimeout(3600)
-                findElement("Done.png")
+                setAutoWaitTimeout(15)
+                if exists("Done.png"):
+                    print "Pan and zoom workflow complete."
+                elif exists("AutoAnalyzerError.png"):
+                    print "Auto AA error appeared on screen. Trying to handle..."
+                    click(Pattern("OK.png").similar(0.75))
+                    
                 os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
+                findElement("Done.png")
                 clickElement("Done.png")
+                setAutoWaitTimeout(30)
             else:
                 clickElement("SmartTrim.png")
                 wait(1)
@@ -73,7 +80,6 @@ class TestGlassPane_GE(unittest.TestCase):
                 setAutoWaitTimeout(3600)
                 findElement(Pattern("Playbar.png").similar(0.79))
                 os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
-
                 click(Pattern("CloseWindow.png").similar(0.78))
                 findElement("No_button.png")
                 clickElement("No_button.png")
