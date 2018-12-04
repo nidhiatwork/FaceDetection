@@ -40,7 +40,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
             type(Key.ENTER)
             clickElement("CoIlection.png")
             wait(2)
-            setAutoWaitTimeout(15)
+            setAutoWaitTimeout(7)
             if Constants.Mode=="Image":
                 if exists(Pattern("Image_Number.png").similar(0.85)):
                     doubleClickElement(Pattern("Image_Number.png").similar(0.85))
