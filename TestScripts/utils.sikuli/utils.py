@@ -8,8 +8,16 @@ reload(BaselineImages)
 
 Settings.TypeDelay = 0.000004
 
+if len(sys.argv)>3:
+        Technology = sys.argv[2]
+        Mode = sys.argv[3]
+else:
+        Technology = Constants.Tech
+        Mode = Constants.M
+
 def close_AA_PRE_And_Launch_AA_PRE():
-        
+
+        print "Technology is: " + Technology + " and Mode is: " + Mode
         setAutoWaitTimeout(60)
         
         print "\n~~~~~~~~Closing Auto creations~~~~~~~~"
@@ -39,8 +47,8 @@ def close_AA_PRE_And_Launch_AA_PRE():
 
 def closePRE():
         print "~~~~~~~~Closing any open instance of PRE application~~~~~~~~"
-        # os.system("sh " + Constants.BatFilesFolder + "Mac_Kill_PRE.sh")
-        # wait(3)
+        os.system("sh " + Constants.BatFilesFolder + "Mac_Kill_PRE.sh")
+        wait(3)
 
 def launchAA():
         print "~~~~~~~~~~Launching AA ~~~~~~~~~~~~~~"

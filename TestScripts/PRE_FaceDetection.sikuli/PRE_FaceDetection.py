@@ -24,7 +24,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
                 continue
             now = datetime.datetime.now()
             postfix = str(now.day) + str(now.month) + str(now.year) + "_" + str(now.hour) + str(now.minute) + str(now.second)
-            if Constants.Mode == "Image":
+            if Mode == "Image":
                 newfilename = "Image#" + str(i) + "_"+ postfix + filename[filename.find("."):]
             else:
                 newfilename = "Video#" + str(i) + "_"+ postfix + filename[filename.find("."):]
@@ -41,12 +41,12 @@ class TestPRE_FaceDetection(unittest.TestCase):
             clickElement("CoIlection.png")
             wait(2)
             setAutoWaitTimeout(7)
-            if Constants.Mode=="Image":
+            if Mode=="Image":
                 if exists(Pattern("Image_Number.png").similar(0.85)):
                     doubleClickElement(Pattern("Image_Number.png").similar(0.85))
                 else:
                     print "Test data not found in system directory. Skipping to next test data."
-                    os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
+                    os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Technology)
                     type(Key.ESC)
                     wait(1)
                     type(Key.ESC)
@@ -59,7 +59,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
                     doubleClickElement(Pattern("Video.png").similar(0.85))
                 else:
                     print "Test data not found in system directory. Skipping to next test data."
-                    os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
+                    os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Technology)
                     type(Key.ESC)
                     wait(1)
                     type(Key.ESC)
@@ -82,7 +82,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
             wait(3)
             os.system("osascript -e 'tell application \"Adobe Premiere Elements\" to activate'")
             clickElement("Tools.png")
-            if Constants.Mode=="Image":
+            if Mode=="Image":
                 clickElement("PanZoomTool.png")
                 setAutoWaitTimeout(15)
                 if exists("Done.png"):
@@ -91,7 +91,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
                     print "Auto AA error appeared on screen. Trying to handle..."
                     click(Pattern("OK.png").similar(0.75))
                     
-                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
+                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Technology)
                 findElement("Done.png")
                 clickElement("Done.png")
                 setAutoWaitTimeout(30)
@@ -104,7 +104,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
                 wait(2)
                 setAutoWaitTimeout(3600)
                 findElement(Pattern("Playbar.png").similar(0.79))
-                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Constants.Technology)
+                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py '" + newfilename + "' " + Technology)
                 click(Pattern("CloseWindow.png").similar(0.78))
                 findElement("No_button.png")
                 clickElement("No_button.png")
@@ -121,7 +121,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
             print "Completed screenshot taking process for file: " + newfilename
             i = i+1
             os.rename(Constants.CollectionFolder+newfilename,Constants.CollectionFolder+filename)
-            if Constants.Technology=="Mona":
+            if Technology=="Mona":
                 os.system("killall 'Elements Auto Creations 2019'")
                 wait(2)
     def tearDown(self):

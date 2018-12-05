@@ -19,21 +19,9 @@ from PRE_FaceDetection import *
 
 suite = unittest.TestSuite()
 
-if len(sys.argv)>1:
-    print "Test areas have been passed as parameter through command line to TestDriver.sikuli script."
-    testcase_arg = sys.argv[1]
-    testcase_list = testcase_arg.split(",")
-
-else:
-    print "Test areas have been passed as parameter through FD_Test_Execution_Data excel file to TestDriver.sikuli script."
-    workbook = xlrd.open_workbook(Constants.FD_Test_Execution_Data)
-    worksheet = workbook.sheet_by_index(0)
-
-    testcase_list = []
-    for row in range(worksheet.nrows):
-        area_flag = worksheet.cell(row, 4).value
-        if area_flag == 1:
-            testcase_list.append((str(worksheet.cell(row, 1).value)) + '.' + (str(worksheet.cell(row, 2).value)))
+print "Test areas have been passed as parameter through command line to TestDriver.sikuli script."
+testcase_arg = sys.argv[1]
+testcase_list = testcase_arg.split(",")
 
 print "Test execution started for below test classes: "
 
