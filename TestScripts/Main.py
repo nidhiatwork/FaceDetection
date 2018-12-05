@@ -20,7 +20,6 @@ if Path(AA_orig_location).exists():
     os.rename(AA_GM_location, AA_FD_location)
     os.rename(AA_orig_location, AA_GM_location)
 
-os.system("cd /Users/nbhushan/PythonScripts/")
 os.system("java -jar '/Applications/SikuliX.app/Contents/Java/sikulix.jar' -r '/Users/nbhushan/Desktop/FD_Automation/TestScripts/TestDriver.sikuli' --args 'TestPRE_FaceDetection.test_UI_FaceDetection' 'Cognitive' '" + Mode + "'")
 
 print "Workflow completed with Cognitive technology for " + Mode
@@ -36,7 +35,6 @@ if Path(AA_FD_location).exists():
     os.rename(AA_GM_location, AA_orig_location)
     os.rename(AA_FD_location, AA_GM_location)
 
-os.system("cd /Users/nbhushan/PythonScripts/")
 os.system("java -jar '/Applications/SikuliX.app/Contents/Java/sikulix.jar' -r '/Users/nbhushan/Desktop/FD_Automation/TestScripts/TestDriver.sikuli' --args 'TestPRE_FaceDetection.test_UI_FaceDetection' 'Mona' '" + Mode + "'")
 
 print "Workflow completed with Mona technology for " + Mode
